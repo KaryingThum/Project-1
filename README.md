@@ -115,3 +115,39 @@ function decodeCameraImage(data) {
 
     return false;
 }
+
+var array = [0,1,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,1,0,1,0,1,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,1,0,1,1,1,0,1,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,0];
+                var i = 0;
+                var x = "";
+                
+                for (i=0;i<array.length;i++)
+                {
+                    // for inter-word space
+	               if((array[i]== 0 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]== 0 && array[i+5]== 0 && array[i+6]== 0))
+	               {
+                       x += '\t';
+	               }
+                    
+		            // for inter-character space
+	               else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==1))
+	               { 
+		              x += "\xa0";
+	               }
+			
+                    // for a dash
+	               else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1)
+	               {
+		              x += "-";
+	               }
+			
+                    // for a dot
+	               else if ((array[i]==0 && array[i+1]==1 && array[i+2]==0))
+	               {
+		              x += ".";
+	               }
+	
+                }
+
+                console.log(x);
+                
+
