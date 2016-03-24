@@ -36,6 +36,8 @@
 
 // Morse code signals
 var morseCodeSignals = {
+
+    // alphabets
     ".-": "a",
     "-...": "b",
     "-.-.": "c",
@@ -62,6 +64,8 @@ var morseCodeSignals = {
     "-..-": "x",
     "-.--": "y",
     "--..": "z",
+    
+    // numbers
     "-----": "0",
     ".----": "1",
     "..---": "2",
@@ -72,6 +76,8 @@ var morseCodeSignals = {
     "--...": "7",
     "---..": "8",
     "----.": "9",
+    
+    // symbols
     "-.--.": "(",
     "-.--.-": ")",
     "........-..-": "$",
@@ -87,6 +93,8 @@ var morseCodeSignals = {
     "-...-": "=",
     "..--.-..--.-": "_",
     "---.---.": "!",
+    
+    inter space charaters
     ".-.-": "\n", \\ New Line
     "...-.-": "SK" \\end of transmission
 };
