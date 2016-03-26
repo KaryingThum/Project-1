@@ -116,38 +116,74 @@ function decodeCameraImage(data) {
     return false;
 }
 
-var array = [0,1,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,1,0,1,0,1,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,1,0,1,1,1,0,1,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,0];
-                var i = 0;
-                var x = "";
-                
-                for (i=0;i<array.length;i++)
-                {
-                    // for inter-word space
-	               if((array[i]== 0 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]== 0 && array[i+5]== 0 && array[i+6]== 0))
-	               {
-                       x += '\t';
-	               }
+
+//=========Task 3=========//
+
+var outputAreaRef = document.getElementById("outputArea");
+var output = "";
+
+// testing
+var array = [0,1,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,1,0,1,0,1,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,1,0,1,1,1,0,1,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,0];
+
+var i = 0;
+var x = "";
+for (i=0;i<array.length;i++)
+{
+	// for inter-word space (7 unit time)
+	if(array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]== 0 && array[i+5]== 0 && array[i+6]== 0 && array[i+7]== 0 && array[i+8]== 1)
+	{
+		x += "   ";
+	}
                     
-		            // for inter-character space
-	               else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==1))
-	               { 
-		              x += "\xa0";
-	               }
-			
-                    // for a dash
-	               else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1)
-	               {
-		              x += "-";
-	               }
-			
-                    // for a dot
-	               else if ((array[i]==0 && array[i+1]==1 && array[i+2]==0))
-	               {
-		              x += ".";
-	               }
-	
-                }
+	// for inter-character space 
+	// (3 unit time)
+	else if(array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==1)
+	{ 
+		x += " ";
+	}
+	// (4 unit time)
+	else if(array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==0 && array[i+5]==1)
+	{ 
+		x += " ";
+	}
+	// (5 unit time)
+	else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==0 && array[i+5]==0 && array[i+6]==1))
+	{ 
+		x += " ";
+	}
+	// (6 unit time)
+	else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==0 && array[i+5]==0 && array[i+6]==0 && array[i+7]==1))
+	{ 
+		x += " ";
+	}
+                    
+	// for a dash
+	// (3 unit time)
+	else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1 && array [i+4] ==0)
+	{
+		x += "-";
+	}
+	// (4 unit time)
+	else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1 && array [i+4] ==1 && array [i+5] ==0)
+	{
+		x += "-";
+	}
+	// (5 unit time)
+	else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1 && array [i+4] ==1 && array [i+5] ==1 && array [i+6] ==0)
+	{
+		x += "-";
+	}
+	               
+	// for a dot
+	else if ((array[i]==0 && array[i+1]==1 && array[i+2]==0))
+	{
+		x += ".";
+	}
+}
 
-                console.log(x);
+outputAreaRef.innerHTML+=array+"<br/>";
+outputAreaRef.innerHTML+=x+"<br/>";
+y=x.split(" ");
+outputAreaRef.innerHTML+=y;
                 
-
+//=========Task 3=========//
