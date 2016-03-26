@@ -122,8 +122,9 @@ function decodeCameraImage(data) {
 var outputAreaRef = document.getElementById("outputArea");
 var output = "";
 
-// testing
+//=====testing=====//
 var array = [0,1,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,1,0,1,0,1,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,1,0,1,1,1,0,1,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,0];
+//=====testing====//
 
 var i = 0;
 var x = "";
