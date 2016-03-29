@@ -205,7 +205,7 @@ function morse2val(y){
         outputAreaRef.innerHTML+=" ";
 	}else{
         var value=y[counter];
-        if morseCodeSignals[value]="SK"{
+        if (morseCodeSignals[value]=="SK"){
             outputAreaRef.innerHTML+=".";
         }else{
 		outputAreaRef.innerHTML+=morseCodeSignals[value];
