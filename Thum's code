@@ -1,0 +1,186 @@
+function decodeCameraImage(data)
+{
+	// ADD YOUR CODE HERE
+	var array= data;
+    var length_values=array.length;
+    var array2=[];
+
+    
+    for(var i=0;i<length_values-1;i++){
+        
+        var red=array[i];
+        var green=array[i++];
+        var blue=array[i++];
+        var alpha=array[i++];
+        
+        if(red>blue){
+            return true;
+            array2[i]=1;
+        }else
+            {
+                return false;
+                array2[i]=0;
+            }
+    
+    }
+	var outputAreaRef = document.getElementById("messageField");
+    var test = bin2morse(array);
+	var toCharacter = morse2val(test);
+	//output += test +"<br/>";
+	output += toCharacter + "<br/>"
+	outputAreaRef.innerHTML += output;
+}
+
+var morseCodeSignals = 
+            {
+            // alphabets
+                ".-": "a",
+                "-...": "b",
+                "-.-.": "c",
+                "-..": "d",
+                ".": "e",
+                "..-.": "f",
+                "--.": "g",
+                "....": "h",
+                "..": "i",
+                ".---": "j",
+                "-.-": "k",
+                ".-..": "l",
+                "--": "m",
+                "-.": "n",
+                "---": "o",
+                ".--.": "p",
+                "--.-": "q",
+                ".-.": "r",
+                "...": "s",
+                "-": "t",
+                "..-": "u",
+                "...-": "v",
+                ".--": "w",
+                "-..-": "x",
+                "-.--": "y",
+                "--..": "z",
+    
+                // numbers
+                "-----": "0",
+                ".----": "1",
+                "..---": "2",
+                "...--": "3",
+                "....-": "4",
+                ".....": "5",
+                "-....": "6",
+                "--...": "7",
+                "---..": "8",
+                "----.": "9",
+    
+                // symbols
+                "-.--.": "(",
+                "-.--.-": ")",
+                "...-..-": "$",
+                ".----.": "\"",
+                "-..-.": "/",
+                ".-.-.": "+",
+                "---...": ":",
+                ".-.-.-": ".",
+                "--..--": ",",
+                "..--..": "?",
+                "-....-": "-",
+                ".--.-.": "@",
+                "-...-": "=",
+                "..--.-": "_",
+                "-.-.--": "!",
+    
+                ///inter space charaters
+                ".-.-": "<\br>", // New Line
+                "...-.-": "SK" //end of transmission
+            };
+
+
+            function bin2morse(array)
+            {
+                var x = "";
+                for (i=0;i<array.length;i++)
+                {
+                    // for inter-word space
+	               if(array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]== 0 && array[i+5]== 0 && array[i+6]== 0 && array[i+7]== 0 && array[i+8]== 1)
+	               {
+                       x += "   ";
+	               }
+                    
+		            // for inter-character space
+	               else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==1))
+	               { 
+		              x += " ";
+	               }
+			         
+                    else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==0 && array[i+5]==1))
+	               { 
+		              x += " ";
+	               }
+                    
+                    else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==0 && array[i+5]==0 && array[i+6]==1))
+	               { 
+		              x += " ";
+	               }
+                    
+                    else if((array[i]== 1 && array[i+1]== 0 && array[i+2]== 0 && array[i+3]== 0 && array[i+4]==0 && array[i+5]==0 && array[i+6]==0 && array[i+7]==1))
+	               { 
+		              x += " ";
+	               }
+                    
+                    // for a dash
+	               else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1 && array [i+4] ==0)
+	               {
+		              x += "-";
+	               }
+                    
+                    else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1 && array [i+4] ==1 && array [i+5] ==0)
+	               {
+		              x += "-";
+	               }
+                    
+                    else if (array [i] ==0 && array [i+1] ==1 && array [i+2] ==1 && array [i+3] ==1 && array [i+4] ==1 && array [i+5] ==1 && array [i+6] ==0)
+	               {
+		              x += "-";
+	               }
+
+                    // for a dot
+	               else if ((array[i]==0 && array[i+1]==1 && array[i+2]==0))
+	               {
+		              x += ".";
+	               }
+	
+                }
+                var result=x.split(" ");
+				return result;
+                
+            }
+
+            function morse2val(y)
+            {
+                var counter=0;
+                var message = "";
+	
+                while(counter<y.length)
+	            {
+		              if (y[counter]=="")
+		              {
+        	               message+=" ";
+		              }
+		
+		              else
+		              {
+        	               var value=y[counter];
+        	               if (morseCodeSignals[value]=="SK")
+			               {
+            	               message+=".";
+        	               }
+			               else
+			               {
+				               message+=morseCodeSignals[value];
+        	               }
+	                   }
+	                   counter++;
+                }
+				return message;
+            }
