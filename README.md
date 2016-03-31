@@ -43,7 +43,7 @@ function decodeCameraImage(data)
     var array= data;
     var length_values=array.length;
     var array2=[];
-
+    var outputAreaRef = document.getElementById("messageField");
     
     for(var i=0;i<length_values-1;i++){
         
@@ -190,7 +190,8 @@ function bin2morse(array){
 	                                           }
     }
     y=x.split(" ");
-    morse2val(y);
+    var ans1=morse2val(y);
+    return ans1;
 }
 
 
@@ -199,20 +200,22 @@ function bin2morse(array){
 function morse2val(y){
     
     var counter=0;
-    var outputAreaRef = document.getElementById("messageField");
+    var output="";
+    
     while(counter<y.length){
 	if (y[counter]==""){
-        outputAreaRef.innerHTML+=" ";
+        output+=" ";
 	}else{
         var value=y[counter];
         if (morseCodeSignals[value]=="SK"){
-            outputAreaRef.innerHTML+=".";
+            messageFinished();
         }else{
-		outputAreaRef.innerHTML+=morseCodeSignals[value];
+		output+=morseCodeSignals[value]+" ";
         }
 	}
 	counter++;
     }
+    return output;
 
 }
 
