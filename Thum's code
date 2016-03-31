@@ -4,6 +4,7 @@ function decodeCameraImage(data)
 	var array= data;
     var length_values=array.length;
     var array2=[];
+    var output="";
 
     
     for(var i=0;i<length_values-1;i++){
@@ -24,7 +25,7 @@ function decodeCameraImage(data)
     
     }
 	var outputAreaRef = document.getElementById("messageField");
-    var test = bin2morse(array);
+    var test = bin2morse(array2);
 	var toCharacter = morse2val(test);
 	//output += test +"<br/>";
 	output += toCharacter + "<br/>"
