@@ -50,7 +50,6 @@ function decodeAnswer () {
 			break
 		}
 	}
-	console.log(counter)
 	return counter
 }
 
