@@ -18,22 +18,7 @@ function decodeCameraImage(data)
                 
 		var outputAreaRef = document.getElementById("messageField");
                 outputAreaRef.innerHTML += message;
-                
-                document.getElementById("restartButton").onclick = function() {
-		var outputAreaRef = document.getElementById("messageField");
-		outputAreaRef.innerHTML+="";
-		
-		convertToTrueFalse="";
-		convertToBin="";
-		array2="";
-		convertToMorseCode="";
-		
-    		clearInterval(capturingInterval);
-    		setImageStatus('restart');
-    		capturingInterval   = setInterval(snapshot, unitTime);
-    		messageFinishedFlag = false;
-		
-		}
+  
                 
                 return convertToTrueFalse;
                 
@@ -287,3 +272,15 @@ function decodeCameraImage(data)
                 ".-.-": "<\br>", // New Line
                 "...-.-": "SK" //end of transmission
             };
+            
+            //task5: clears the message //
+ 	document.getElementById("restartButton").onclick = function() {
+		document.getElementById("messageField").value="";
+				
+		array2=[];
+
+		clearInterval(capturingInterval);
+    		setImageStatus('restart');
+    		capturingInterval   = setInterval(snapshot, unitTime);
+    		messageFinishedFlag = false;
+		}
