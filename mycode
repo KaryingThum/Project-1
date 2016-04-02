@@ -1,0 +1,115 @@
+function decodeCameraImage(data)
+            {
+                var convertToTrueFalse = analyseImageData_OnOffSignal(data);
+                var convertToMorseCode = analysesignal(convertToTrueFalse);
+                console.log(convertToMorseCode);
+                
+                var convertToMessage = morse2val(convertToMorseCode);
+                console.log(convertToMessage);
+                
+	            	var outputAreaRef = document.getElementById("messageField");
+                outputAreaRef.innerHTML += message;
+  
+                
+                return convertToTrueFalse;
+                
+            }
+            
+            
+            typeofdotordash={
+            "dot":".",
+            "dash":"-",
+            "interelementspace"="";
+            "intercharacterspace"="";
+            "interwordspace"=" ";
+            }
+            
+            
+            function analyseImageData_OnOffSignal(arrayOfPixel)
+            {
+                var array = arrayOfPixel;
+                var mostRed = 0;
+                var mostBlue = 0;
+                var result = "";
+                
+                for (i=0; i<array.length; i++)
+                    {
+                        var red =array[i];
+                        var green = array[i+=1];
+                        var blue = array[i+=1];
+                        var alpha = array[i+=1];
+                        
+                        if (red>blue)
+                            {
+                                mostRed++;
+                            }
+                        else if(red<blue)
+                            {
+                                mostBlue++;
+                            }
+                    }
+                        
+                if(mostRed>mostBlue)
+                {
+                    result = true;
+                }
+                else if(mostRed<mostBlue)
+                {
+                    result = false;
+                }
+                
+                return result;
+            }
+            
+            function analysesignal(convert){
+            if(convert===true){
+            var number_of_on++;
+            var correctmorse="";
+            
+            
+            if(number_of_on>=1)||(number_of_on<=2)&&(convert==false){
+              correctmorse+=typeofdotordash["dot"];
+            }
+            else if(number_of_on>=3){
+              correctmorse+=typeofdotordash["dash"];
+            }
+            }
+            else{
+            if(convert===false){
+            
+            var number_of_off++;
+             if(number_of_off>=1)||(number_of_on<=2)&&(convert==true){
+              correctmorse+=typeofdotordash["interelementspace"];
+            }
+            else if(number_of_off>=3)||(number_of_on<=6)&&(convert==true){
+              correctmorse+=typeofdotordash["intercharacterspace"];
+            } 
+            else if(number_of_off>=7)&&(convert==true){
+              correctmorse+=typeofdotordash["interwordspace"];
+            }
+            }}
+            return correctmorse;
+            
+            }
+            
+            
+            function morse2val(convertToMorseCode){
+            var array1=convertomorsecode.split(" ");
+            var counter=0;
+              while(counter<array1.length)
+	            {
+		           var value=y[counter];
+        	     if (morseCodeSignals[value]=="SK")
+			             {
+            	       messageFinished();
+        	         }
+			         else
+			             {
+				             message+=morseCodeSignals[value]+" ";
+        	         }
+        	         counter++;
+	             }
+	             return message;
+              }
+	
+            
