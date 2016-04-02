@@ -19,6 +19,12 @@ function decodeCameraImage(data)
 		var outputAreaRef = document.getElementById("messageField");
                 outputAreaRef.innerHTML += message;
                 
+                document.getElementById("restartButton").onclick = clearmsg();
+		function clearmsg(){
+		    var outputAreaRef = document.getElementById("messageField");
+		    outputAreaRef.innerHTML+="";
+		}
+                
                 return convertToTrueFalse;
                 
             }
