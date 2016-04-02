@@ -9,7 +9,7 @@ function decodeCameraImage(data)
                 var convertToBin = boolToBin(convertToTrueFalse);
                 var convertToMorseCode = binToMorseCode(array2);
                 var convertToMessage = morse2val(convertToMorseCode);
-				var outputAreaRef = document.getElementById("messageField");
+		var outputAreaRef = document.getElementById("messageField");
                 outputAreaRef.innerHTML += message;
                 
                 return convertToTrueFalse;
