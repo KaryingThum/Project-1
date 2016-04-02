@@ -196,7 +196,7 @@ function decodeCameraImage(data)
         	               var value=y[counter];
         	               if (morseCodeSignals[value]=="SK")
 			               {
-            	               message+=".";
+            	               messageFinished();
         	               }
 			               else
 			               {
