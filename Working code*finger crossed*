@@ -273,14 +273,9 @@ function decodeCameraImage(data)
                 "...-.-": "SK" //end of transmission
             };
             
-            //task5: clears the message //
- 	document.getElementById("restartButton").onclick = function() {
+        //task5: clears the message //
+ 	document.getElementById("restartButton").addEventListener("click",function() {
 		document.getElementById("messageField").value="";
-				
-		array2=[];
-
-		clearInterval(capturingInterval);
-    		setImageStatus('restart');
-    		capturingInterval   = setInterval(snapshot, unitTime);
-    		messageFinishedFlag = false;
-		}
+		array2 = [];
+		message = "";
+	});
