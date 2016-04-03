@@ -1,0 +1,89 @@
+var outputArea= document.getElementById("messageField");
+outputArea.innerHTML = "";
+ 
+var message = " ";
+var char = "";
+var prevColour = "0";
+var redCounter = 0;
+var blueCounter = 0;
+ 
+function decodeCameraImage(data)
+{
+    // ADD YOUR CODE HERE
+                    var r=0;
+                    var b=0;
+               
+    for (i=0; i<data.length;i+4)
+        {
+            r+= data[i];
+            b+= data[i+2];
+                       
+       
+        var red = r;
+        var blue = b; 
+   
+            if ((red > blue) && (prevColour == "blue"))
+            {
+                redCounter++
+               
+                if  (blueCounter >= 7)
+                {
+                    message = morseTable[char];
+                    messageFieldRef.innerHTML += message + " ";
+                    char = "";
+                   
+                }
+                    else if ((blueCounter >= 4) && (blueCounter <=7))
+                {
+                    message = morseTable[char];
+                    messageFieldRef.innerHTML += message;
+                    char = "";
+                }
+                else if((blueCounter >= 1) && (blueCounter <=4))
+                {
+                    //messageFieldRef.innerHTML += "blue" + blueCounter;
+                }
+               
+           
+                //messageFieldRef.innerHTML += "blue" + blueCounter;
+                blueCounter = 1;
+                prevColour = "red";
+                return true
+            }
+            else if (red > blue)
+            {
+                redCounter++
+                prevColour = "red";
+                return true
+            }
+            else if ((blue > red) && (prevColour == "red"))
+            {
+                blueCounter++
+               
+                        if ((redCounter >= 1) && (redCounter <=3))
+                {
+                    char += ".";
+                    //messageFieldRef.innerHTML += ".";
+                }
+                else if (redCounter >= 3)
+                {
+                    char += "-";
+                    //messageFieldRef.innerHTML += "-";
+                }
+           
+               
+                //messageFieldRef.innerHTML += " red" + redCounter;
+                redCounter=1;
+                prevColour = "blue";
+                     return false
+            }
+            else if (blue> red)
+            {
+                blueCounter++
+                prevColour = "blue";
+                return false
+            }
+           
+        }
+           
+}
