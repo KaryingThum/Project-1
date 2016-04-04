@@ -267,3 +267,13 @@ var morseCodeSignals =
                 ".-.-": "<\br>", // New Line
                 "...-.-": "SK" //end of transmission
             };
+            
+            //task 5
+        document.getElementById("restartButton").addEventListener("click",function() {
+        	document.getElementById("messageField").value="";
+		array2 = [];
+		numberOn=0;
+		numberOff=0;
+		morseCode="";
+		message2="";
+	});
