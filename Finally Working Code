@@ -197,88 +197,15 @@ function decodeCameraImage(data)
                     	if (dotDashSignals === character)
                     	{
                         	message=morseCodeSignals[character];
+							
+							if (message=="SK"){
+								messageFinished();
+								message="";
+							}
+
                     	}
 					}
                 }
 	
                 return message;
             }
-
-var morseCodeSignals = 
-            {
-            // alphabets
-                ".-": "a",
-                "-...": "b",
-                "-.-.": "c",
-                "-..": "d",
-                ".": "e",
-                "..-.": "f",
-                "--.": "g",
-                "....": "h",
-                "..": "i",
-                ".---": "j",
-                "-.-": "k",
-                ".-..": "l",
-                "--": "m",
-                "-.": "n",
-                "---": "o",
-                ".--.": "p",
-                "--.-": "q",
-                ".-.": "r",
-                "...": "s",
-                "-": "t",
-                "..-": "u",
-                "...-": "v",
-                ".--": "w",
-                "-..-": "x",
-                "-.--": "y",
-                "--..": "z",
-    
-                // numbers
-                "-----": "0",
-                ".----": "1",
-                "..---": "2",
-                "...--": "3",
-                "....-": "4",
-                ".....": "5",
-                "-....": "6",
-                "--...": "7",
-                "---..": "8",
-                "----.": "9",
-    
-                // symbols
-                "-.--.": "(",
-                "-.--.-": ")",
-                "...-..-": "$",
-                ".----.": "\"",
-                "-..-.": "/",
-                ".-.-.": "+",
-                "---...": ":",
-                ".-.-.-": ".",
-                "--..--": ",",
-                "..--..": "?",
-                "-....-": "-",
-                ".--.-.": "@",
-                "-...-": "=",
-                "..--.-": "_",
-                "-.-.--": "!",
-    
-                ///inter space charaters
-                ".-.-": "<\br>", // New Line
-                "...-.-": "SK" //end of transmission
-            };
-            
-            //task 5
-       document.getElementById('restartButton').addEventListener('click', function() {
-       	document.getElementById("messageField").value="";
-		array2 = [];
-		numberOn=0;
-		numberOff=0;
-		morseCode="";
-		message2="";
-    		clearInterval(capturingIntervalID);
-    		setImageStatus('restart');
-    		capturingIntervalID = setInterval(snapshot, unitTime);
-    		messageFinishedFlag = false;
-        	
-	});
