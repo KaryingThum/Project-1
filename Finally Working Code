@@ -1,0 +1,269 @@
+/*
+ * Morse Code receiver app information:
+ *
+ * Function: messageFinished(): stops the capturing process
+ *
+ *	 You can call this function to let the app know that the 
+ *	 end-of-transmission signal has been received.
+ *
+ * -------------------------------------------------------
+ *
+ * ID: messageField: id of the message text area
+ *
+ *	 This will be a textarea element where you can display
+ *	 the recieved message for the user.
+ * 
+ * -------------------------------------------------------
+ *
+ * ID: restartButton: id of the Restart button
+ *
+ *	 This is a button element.  When clicked this should 
+ *	 cause your app to reset its state and begin recieving
+ *	 a new message.
+ *
+ */
+
+
+// ADD YOUR ADDITIONAL FUNCTIONS AND GLOBAL VARIABLES HERE
+//var outputAreaRef = document.getElementById("outputArea"); 
+var array2 = [];
+var numberOn=0;
+var numberOff=0;
+var morseCode="";
+var message2="";
+var outputAreaRef = document.getElementById("messageField");
+outputAreaRef.innerHTML="";
+
+
+//var convertToBin = boolToBin(convertToTrueFalse);
+//var convertToMorseCode = binToMorseCode(array2);
+//var convertToMessage = morse2val(convertToMorseCode);
+//outputAreaRef.innerHTML += message;
+
+
+/*
+ * This function is called once per unit of time with camera image data.
+ * 
+ * Input : Image Data. An array of integers representing a sequence of pixels.
+ *		 Each pixel is representing by four consecutive integer values for 
+ *		 the 'red', 'green', 'blue' and 'alpha' values.  See the assignment
+ *		 instructions for more details.
+ * Output: You should return a boolean denoting whether or not the image is 
+ *		 an 'on' (red) signal.
+ */
+function decodeCameraImage(data)
+            {
+                //var outputAreaRef = document.getElementById("outputArea");
+                
+                var result = analyseImageData_OnOffSignal(data);
+
+                var booleanToBin = boolToBin(result);
+				console.log("array="+array2);
+
+				decoding(array2);
+                
+                return result;
+                
+            }
+            
+            
+            function analyseImageData_OnOffSignal(arrayOfPixel)
+            {
+                var array = arrayOfPixel;
+                var mostRed = 0;
+                var mostBlue = 0;
+                var result = "";
+                
+                for (i=0; i<array.length; i++)
+                    {
+                        var red =array[i];
+                        var green = array[i+=1];
+                        var blue = array[i+=1];
+                        var alpha = array[i+=1];
+                        
+                        if (red>blue)
+                            {
+                                mostRed++;
+                            }
+                        else if(red<blue)
+                            {
+                                mostBlue++;
+                            }
+					}
+                        
+                 if(mostRed>mostBlue)
+                 {
+                        result = true;
+                 }
+                 else if(mostRed<mostBlue)
+                 {
+                        result = false;
+                 }
+                return result;
+            }
+            
+            //function that change true false to binary code
+            function boolToBin(bool)
+            {
+                if(bool === true)
+                    {
+                        array2.push(1);
+                    }
+                else if(bool === false)
+                    {
+                        array2.push(0);
+                    }
+                return array2;
+            }
+
+            //function for task 3
+             function decoding(arrayInBin)
+            {
+               for(i=0;i<arrayInBin.length;i++)
+               {
+                   if(arrayInBin[i]==0)
+                   {
+                       numberOff++;
+                       if((numberOn==1)||(numberOn==2))
+                       {
+						   console.log("on="+numberOn);
+                           //state=".";
+                           morseCode+=".";
+						   console.log(morseCode);
+                           numberOn=0;
+						   array2=[];
+                       }
+                       else if((numberOn>=3)&&(numberOn<=6))
+                       {
+						   console.log("on="+numberOn);
+                           //state="-";
+                           morseCode+="-";
+						   console.log(morseCode);
+                           numberOn=0;
+						   array2=[];
+                       }
+					   else
+					   {
+					   	   array2=[];
+					   }
+                   }
+                   
+                   else if(arrayInBin[i]==1)
+                   {
+                       numberOn++;
+                       if((numberOff==1)||(numberOff==2))
+                       {
+						   console.log("off="+numberOff);
+                           numberOff=0;
+						   array2=[];
+                       }
+                       else if((numberOff>=3)&&(numberOff<=6))
+                       {
+						   console.log("off="+numberOff);
+                           message2+=morse2val(morseCode)+"";
+                           morseCode="";
+                           numberOff=0;
+						   array2=[];
+                       }
+                       else if(numberOff>=7)
+                       {
+						   console.log("off="+numberOff);
+                           message2+=morse2val(morseCode)+" ";
+                           morseCode="";
+                           numberOff=0;
+						   array2=[];
+                       }
+					   else
+					   {
+						   array2=[];
+					   }
+                   }
+               }
+                   
+	
+                console.log(message2);
+
+                outputAreaRef.innerHTML = message2;
+            }
+            
+            //function for task 4
+             function morse2val(dotDashSignals)
+            {
+                var message="";
+                for(var character in morseCodeSignals)
+                {
+					for(i=0;i<dotDashSignals.length;i++)
+					{
+                    	if (dotDashSignals === character)
+                    	{
+                        	message=morseCodeSignals[character];
+                    	}
+					}
+                }
+	
+                return message;
+            }
+
+var morseCodeSignals = 
+            {
+            // alphabets
+                ".-": "a",
+                "-...": "b",
+                "-.-.": "c",
+                "-..": "d",
+                ".": "e",
+                "..-.": "f",
+                "--.": "g",
+                "....": "h",
+                "..": "i",
+                ".---": "j",
+                "-.-": "k",
+                ".-..": "l",
+                "--": "m",
+                "-.": "n",
+                "---": "o",
+                ".--.": "p",
+                "--.-": "q",
+                ".-.": "r",
+                "...": "s",
+                "-": "t",
+                "..-": "u",
+                "...-": "v",
+                ".--": "w",
+                "-..-": "x",
+                "-.--": "y",
+                "--..": "z",
+    
+                // numbers
+                "-----": "0",
+                ".----": "1",
+                "..---": "2",
+                "...--": "3",
+                "....-": "4",
+                ".....": "5",
+                "-....": "6",
+                "--...": "7",
+                "---..": "8",
+                "----.": "9",
+    
+                // symbols
+                "-.--.": "(",
+                "-.--.-": ")",
+                "...-..-": "$",
+                ".----.": "\"",
+                "-..-.": "/",
+                ".-.-.": "+",
+                "---...": ":",
+                ".-.-.-": ".",
+                "--..--": ",",
+                "..--..": "?",
+                "-....-": "-",
+                ".--.-.": "@",
+                "-...-": "=",
+                "..--.-": "_",
+                "-.-.--": "!",
+    
+                ///inter space charaters
+                ".-.-": "<\br>", // New Line
+                "...-.-": "SK" //end of transmission
+            };
