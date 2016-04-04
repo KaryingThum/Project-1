@@ -269,11 +269,16 @@ var morseCodeSignals =
             };
             
             //task 5
-        document.getElementById("restartButton").addEventListener("click",function() {
-        	document.getElementById("messageField").value="";
+       document.getElementById('restartButton').addEventListener('click', function() {
+       	document.getElementById("messageField").value="";
 		array2 = [];
 		numberOn=0;
 		numberOff=0;
 		morseCode="";
 		message2="";
+    		clearInterval(capturingIntervalID);
+    		setImageStatus('restart');
+    		capturingIntervalID = setInterval(snapshot, unitTime);
+    		messageFinishedFlag = false;
+        	
 	});
