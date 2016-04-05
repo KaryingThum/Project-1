@@ -25,7 +25,7 @@
 
 
 // ADD YOUR ADDITIONAL FUNCTIONS AND GLOBAL VARIABLES HERE
-//var outputAreaRef = document.getElementById("outputArea"); 
+
 var array2 = [];
 var numberOn=0;
 var numberOff=0;
@@ -186,7 +186,8 @@ function decodeCameraImage(data)
                 outputAreaRef.innerHTML = message2;
             }
             
-            //function for task 4
+            //Task 4- This function was created to use the object "morseCodeSignals" to get the corresponding character from the
+            //        parameter set in this function "dotdashSignals" which contains the morse for that character. 
              function morse2val(dotDashSignals)
             {
                 var message="";
@@ -199,9 +200,9 @@ function decodeCameraImage(data)
                         	message=morseCodeSignals[character];
 							
 							if (message=="SK"){
-								messageFinished();
-								message="";
-							}
+								messageFinished();              // Task 6- This part of the code checks if this character is and end of transmission(SK) if so
+								message="";                     //         it doesnt return any character to the message and runs the messageFinished() which
+							}                                   //         returns the circle icon to green (ready state).
 
                     	}
 					}
@@ -211,8 +212,10 @@ function decodeCameraImage(data)
             }
 
 var morseCodeSignals = 
+    // Task 2-This object "morseCodeSignals" containing the property of all the dot and dashes which were obtained from the above code and then 
+    // recieves the correct character corresponding to it.
             {
-            // alphabets
+                // ALPHABETS
                 ".-": "A",
                 "-...": "B",
                 "-.-.": "C",
@@ -240,7 +243,7 @@ var morseCodeSignals =
                 "-.--": "Y",
                 "--..": "Z",
     
-                // numbers
+                // NUMBERS
                 "-----": "0",
                 ".----": "1",
                 "..---": "2",
@@ -252,7 +255,7 @@ var morseCodeSignals =
                 "---..": "8",
                 "----.": "9",
     
-                // symbols
+                // SYMBOLS
                 "-.--.": "(",
                 "-.--.-": ")",
                 "...-..-": "$",
@@ -269,24 +272,24 @@ var morseCodeSignals =
                 "..--.-": "_",
                 "-.-.--": "!",
     
-                ///inter space charaters
+                //INTER SPACE CHARACTERS
                 ".-.-": "<\br>", // New Line
-                "...-.-": "SK" //end of transmission
+                "...-.-": "SK" //End of transmission
             };
             
-            //task 5
-       document.getElementById('restartButton').addEventListener('click', function() {
-       	document.getElementById("messageField").innerHTML="";
-		array2 = [];
-		numberOn=0;
-		numberOff=0;
-		morseCode="";
-		message2="";
-    		clearInterval(capturingIntervalID);
-    		setImageStatus('restart');
-    		capturingIntervalID = setInterval(snapshot, unitTime);
-    		messageFinishedFlag = false;
-		   
-		   decodeCameraImage(data);
+            //Task 5- This code is used to clear the content in the message field box using an anonymous function.
+            //        Also this code clears the previous variables being used to get the given morse code. 
+       		document.getElementById('restartButton').addEventListener('click', function() {
+       		      document.getElementById("messageField").innerHTML="";     // clears the message field
+		          array2 = [];                                              //----------
+		          numberOn=0;                                               //            clears
+		          numberOff=0;                                              //                    the 
+		          morseCode="";                                             //                        variables  
+		          message2="";                                              //                                  --------------//
+                  clearInterval(capturingIntervalID);                                             
+    		      setImageStatus('restart');
+    		      capturingIntervalID = setInterval(snapshot, unitTime);
+    		      messageFinishedFlag = false;
+		          decodeCameraImage(data);
         	
-	});
+	       });
