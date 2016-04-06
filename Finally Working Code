@@ -34,13 +34,6 @@ var message2="";
 var outputAreaRef = document.getElementById("messageField");
 outputAreaRef.innerHTML="";
 
-
-//var convertToBin = boolToBin(convertToTrueFalse);
-//var convertToMorseCode = binToMorseCode(array2);
-//var convertToMessage = morse2val(convertToMorseCode);
-//outputAreaRef.innerHTML += message;
-
-
 /*
  * This function is called once per unit of time with camera image data.
  * 
