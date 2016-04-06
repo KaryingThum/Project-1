@@ -23,7 +23,6 @@
  *
  */
 
-
 // ADD YOUR ADDITIONAL FUNCTIONS AND GLOBAL VARIABLES HERE
 
 var array2 = [];
@@ -45,244 +44,242 @@ outputAreaRef.innerHTML="";
  *		 an 'on' (red) signal.
  */
 function decodeCameraImage(data)
-            {
-                //var outputAreaRef = document.getElementById("outputArea");
-                
-                var result = analyseImageData_OnOffSignal(data);
+{
+	// Calling the function to decode the ImageData into true or false
+	var result = analyseImageData_OnOffSignal(data);
 
-                var booleanToBin = boolToBin(result);
-				console.log("array="+array2);
-
-				decoding(array2);
+	// Calling the function to change the true false into 1/0 and put it into an array
+	var booleanToBin = boolToBin(result);
+	console.log("array="+array2);
+		
+	// Calling the decoding function to decode the value in the array into message
+	decoding(array2);
                 
-                return result;
-                
-            }
+	return result;
+}
             
-            
-            function analyseImageData_OnOffSignal(arrayOfPixel)
-            {
-                var array = arrayOfPixel;
-                var mostRed = 0;
-                var mostBlue = 0;
-                var result = "";
+// function for task 1
+// This function is to analyse the image data captured and check for each pixel in the image.
+// If most of the pixel is red, the function will return true.
+// If most of the pixel is blue, the function will return false.
+function analyseImageData_OnOffSignal(arrayOfPixel)
+{
+	var array = arrayOfPixel;
+	var mostRed = 0;
+	var mostBlue = 0;
+	var result = "";
                 
-                for (i=0; i<array.length; i++)
-                    {
-                        var red =array[i];
-                        var green = array[i+=1];
-                        var blue = array[i+=1];
-                        var alpha = array[i+=1];
+	for (i=0; i<array.length; i++)
+	{
+		var red =array[i];
+		var green = array[i+=1];
+		var blue = array[i+=1];
+		var alpha = array[i+=1];
                         
-                        if (red>blue)
-                            {
-                                mostRed++;
-                            }
-                        else if(red<blue)
-                            {
-                                mostBlue++;
-                            }
-					}
+		if (red>blue)
+		{
+			mostRed++;
+		}
+		else if(red<blue)
+		{
+			mostBlue++;
+		}
+	}
                         
-                 if(mostRed>mostBlue)
-                 {
-                        result = true;
-                 }
-                 else if(mostRed<mostBlue)
-                 {
-                        result = false;
-                 }
-                return result;
-            }
+	if(mostRed>mostBlue)
+	{
+		result = true;
+	}
+ 	else if(mostRed<mostBlue)
+	{
+		result = false;
+	}
+	return result;
+}
+
+//function that change true false to binary code
+function boolToBin(bool)
+{
+	if(bool === true)
+	{
+		array2.push(1);
+	}
+	else if(bool === false)
+	{
+		array2.push(0);
+	}
+	return array2;
+}
             
-            //function that change true false to binary code
-            function boolToBin(bool)
-            {
-                if(bool === true)
-                    {
-                        array2.push(1);
-                    }
-                else if(bool === false)
-                    {
-                        array2.push(0);
-                    }
-                return array2;
-            }
-
-            //function for task 3
-             function decoding(arrayInBin)
-            {
-               for(i=0;i<arrayInBin.length;i++)
-               {
-                   if(arrayInBin[i]==0)
-                   {
-                       numberOff++;
-                       if((numberOn==1)||(numberOn==2))
-                       {
-						   console.log("on="+numberOn);
-                           //state=".";
-                           morseCode+=".";
-						   console.log(morseCode);
-                           numberOn=0;
-						   array2=[];
-                       }
-                       else if((numberOn>=3)&&(numberOn<=6))
-                       {
-						   console.log("on="+numberOn);
-                           //state="-";
-                           morseCode+="-";
-						   console.log(morseCode);
-                           numberOn=0;
-						   array2=[];
-                       }
-					   else
-					   {
-					   	   array2=[];
-					   }
-                   }
-                   
-                   else if(arrayInBin[i]==1)
-                   {
-                       numberOn++;
-                       if((numberOff==1)||(numberOff==2))
-                       {
-						   console.log("off="+numberOff);
-                           numberOff=0;
-						   array2=[];
-                       }
-                       else if((numberOff>=3)&&(numberOff<=6))
-                       {
-						   console.log("off="+numberOff);
-                           message2+=morse2val(morseCode)+"";
-                           morseCode="";
-                           numberOff=0;
-						   array2=[];
-                       }
-                       else if(numberOff>=7)
-                       {
-						   console.log("off="+numberOff);
-                           message2+=morse2val(morseCode)+" ";
-                           morseCode="";
-                           numberOff=0;
-						   array2=[];
-                       }
-					   else
-					   {
-						   array2=[];
-					   }
-                   }
-               }
-                   
-	
-                console.log(message2);
-
-                outputAreaRef.innerHTML = message2;
-            }
-            
-            //Task 4- This function was created to use the object "morseCodeSignals" to get the corresponding character from the
-            //        parameter set in this function "dotdashSignals" which contains the morse for that character. 
-             function morse2val(dotDashSignals)
-            {
-                var message="";
-                for(var character in morseCodeSignals)
-                {
-					for(i=0;i<dotDashSignals.length;i++)
-					{
-                    	if (dotDashSignals === character)
-                    	{
-                        	message=morseCodeSignals[character];
-							
-							if (message=="SK"){
-								messageFinished();              // Task 6- This part of the code checks if this character is and end of transmission(SK) if so
-								message="";                     //         it doesnt return any character to the message and runs the messageFinished() which
-							}                                   //         returns the circle icon to green (ready state).
-
-                    	}
-					}
-                }
-	
-                return message;
-            }
-
+// Task 2-This object "morseCodeSignals" containing the property of all the dot and dashes which were obtained from the above code and then 
+// recieves the correct character corresponding to it.
 var morseCodeSignals = 
-    // Task 2-This object "morseCodeSignals" containing the property of all the dot and dashes which were obtained from the above code and then 
-    // recieves the correct character corresponding to it.
-            {
-                // ALPHABETS
-                ".-": "A",
-                "-...": "B",
-                "-.-.": "C",
-                "-..": "D",
-                ".": "E",
-                "..-.": "F",
-                "--.": "G",
-                "....": "H",
-                "..": "I",
-                ".---": "J",
-                "-.-": "K",
-                ".-..": "L",
-                "--": "M",
-                "-.": "N",
-                "---": "O",
-                ".--.": "P",
-                "--.-": "Q",
-                ".-.": "R",
-                "...": "S",
-                "-": "T",
-                "..-": "U",
-                "...-": "V",
-                ".--": "W",
-                "-..-": "X",
-                "-.--": "Y",
-                "--..": "Z",
+{
+	// ALPHABETS
+	".-": "A",
+	"-...": "B",
+	"-.-.": "C",
+	"-..": "D",
+	".": "E",
+	"..-.": "F",
+	"--.": "G",
+	"....": "H",
+	"..": "I",
+	".---": "J",
+	"-.-": "K",
+	".-..": "L",
+	"--": "M",
+	"-.": "N",
+	"---": "O",
+	".--.": "P",
+	"--.-": "Q",
+	".-.": "R",
+	"...": "S",
+	"-": "T",
+	"..-": "U",
+	"...-": "V",
+	".--": "W",
+	"-..-": "X",
+	"-.--": "Y",
+	"--..": "Z",
     
-                // NUMBERS
-                "-----": "0",
-                ".----": "1",
-                "..---": "2",
-                "...--": "3",
-                "....-": "4",
-                ".....": "5",
-                "-....": "6",
-                "--...": "7",
-                "---..": "8",
-                "----.": "9",
+	// NUMBERS
+	"-----": "0",
+	".----": "1",
+	"..---": "2",
+	"...--": "3",
+	"....-": "4",
+	".....": "5",
+	"-....": "6",
+	"--...": "7",
+	"---..": "8",
+	"----.": "9",
     
-                // SYMBOLS
-                "-.--.": "(",
-                "-.--.-": ")",
-                "...-..-": "$",
-                ".----.": "\"",
-                "-..-.": "/",
-                ".-.-.": "+",
-                "---...": ":",
-                ".-.-.-": ".",
-                "--..--": ",",
-                "..--..": "?",
-                "-....-": "-",
-                ".--.-.": "@",
-                "-...-": "=",
-                "..--.-": "_",
-                "-.-.--": "!",
+	// SYMBOLS
+	"-.--.": "(",
+	"-.--.-": ")",
+	"...-..-": "$",
+	".----.": "\"",
+	"-..-.": "/",
+	".-.-.": "+",
+	"---...": ":",
+	".-.-.-": ".",
+	"--..--": ",",
+	"..--..": "?",
+	"-....-": "-",
+	".--.-.": "@",
+	"-...-": "=",
+	"..--.-": "_",
+	"-.-.--": "!",
     
-                //INTER SPACE CHARACTERS
-                ".-.-": "<\br>", // New Line
-                "...-.-": "SK" //End of transmission
-            };
+	//INTER SPACE CHARACTERS
+	".-.-": "<\br>", // New Line
+	"...-.-": "SK" //End of transmission
+};
+
+//function for task 3
+function decoding(arrayInBin)
+{
+	for(i=0;i<arrayInBin.length;i++)
+	{
+		if(arrayInBin[i]==0)
+		{
+			numberOff++;
+			if((numberOn==1)||(numberOn==2))
+			{
+				console.log("on="+numberOn);
+				morseCode+=".";
+				console.log(morseCode);
+				numberOn=0;
+				array2=[];
+			}
+			else if((numberOn>=3)&&(numberOn<=6))
+			{
+				console.log("on="+numberOn);
+				morseCode+="-";
+				console.log(morseCode);
+				numberOn=0;
+				array2=[];
+			}
+			else
+			{
+				array2=[];
+			}
+		}
+                   
+		else if(arrayInBin[i]==1)
+		{
+			numberOn++;
+			if((numberOff==1)||(numberOff==2))
+			{
+				console.log("off="+numberOff);
+				numberOff=0;
+				array2=[];
+			}
+			else if((numberOff>=3)&&(numberOff<=6))
+			{
+				console.log("off="+numberOff);
+				message2+=morse2val(morseCode)+"";
+				morseCode="";
+				numberOff=0;
+				array2=[];
+			}
+			else if(numberOff>=7)
+			{
+				console.log("off="+numberOff);
+				message2+=morse2val(morseCode)+" ";
+				morseCode="";
+				numberOff=0;
+				array2=[];
+			}
+			else
+			{
+				array2=[];
+			}
+		}
+	}
+	console.log(message2);
+	outputAreaRef.innerHTML = message2;
+}
             
-            //Task 5- This code is used to clear the content in the message field box using an anonymous function.
-            //        Also this code clears the previous variables being used to get the given morse code. 
-       		document.getElementById('restartButton').addEventListener('click', function() {
-       		      document.getElementById("messageField").innerHTML="";     // clears the message field
-		          array2 = [];                                              //----------
-		          numberOn=0;                                               //            clears
-		          numberOff=0;                                              //                    the 
-		          morseCode="";                                             //                        variables  
-		          message2="";                                              //                                  --------------//
-                  clearInterval(capturingIntervalID);                                             
-    		      setImageStatus('restart');
-    		      capturingIntervalID = setInterval(snapshot, unitTime);
-    		      messageFinishedFlag = false;
-		          decodeCameraImage(data);
-        	
-	       });
+//Task 4 
+//This function was created to use the object "morseCodeSignals" to get the corresponding character from the
+//parameter set in this function "dotdashSignals" which contains the morse for that character. 
+function morse2val(dotDashSignals)
+{
+	var message="";
+	for(var character in morseCodeSignals)
+	{
+		for(i=0;i<dotDashSignals.length;i++)
+		{
+			if (dotDashSignals === character)
+			{
+				message=morseCodeSignals[character];
+				if (message=="SK")
+				{
+					messageFinished();	// Task 6- This part of the code checks if this character is and end of transmission(SK) if so
+					message="";       	//         it doesnt return any character to the message and runs the messageFinished() which
+				}                         	//         returns the circle icon to green (ready state).
+
+			}
+		}
+	}
+	return message;
+}
+
+//Task 5- This code is used to clear the content in the message field box using an anonymous function.
+//        Also this code clears the previous variables being used to get the given morse code. 
+document.getElementById('restartButton').addEventListener('click', function() 
+{
+	document.getElementById("messageField").innerHTML="";     // clears the message field
+	array2 = [];                                              //-------------//
+	numberOn=0;                                               //    clears
+	numberOff=0;                                              //    the 
+	morseCode="";                                             //    variables  
+	message2="";                                              //--------------//
+	clearInterval(capturingIntervalID);                                             
+	setImageStatus('restart');
+	capturingIntervalID = setInterval(snapshot, unitTime);
+	messageFinishedFlag = false;
+	decodeCameraImage(data);
+});
