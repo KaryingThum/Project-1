@@ -23,7 +23,8 @@
  *
  */
 
-//These are th global variables which are set in the cousrse of this code.
+// These are the global variables in this code .
+
 var array2 = [];
 var numberOn=0;
 var numberOff=0;
@@ -102,9 +103,6 @@ function analyseImageData_OnOffSignal(arrayOfPixel)
 	return result;
 }
 
-
-/****************************************************************************************************/
-
 /*
  * This function boolToBin is used change true/false to binary code from the result of the above function
  * 
@@ -124,8 +122,6 @@ function boolToBin(bool)
 	}
 	return array2;
 }
-
-/*********************************************************************************************************/
             
 // This object "morseCodeSignals" containing the property of all the dot and dashes which were obtained from the above code and then 
 // recieves the correct character corresponding to it.
@@ -174,7 +170,7 @@ var morseCodeSignals =
 	// symbols
     	"-.--.": "(",
     	"-.--.-": ")",
-    	".-..-.": """,
+    	".-..-.": "\"",
     	"-...-": "=",
     	".----.": "'",
     	"-..-.": "/",
@@ -189,13 +185,11 @@ var morseCodeSignals =
     	"..--.-": "_",
     	"-.-.--": "!",
     
-    
 	//INTER SPACE CHARACTERS
 	".-.-": "\n", // New Line
 	"...-.-": "SK" //End of transmission
 };
 
-/***********************************************************************************************************/
 /*
  * This function decoding is used to analyse the binary array sent in is used to counte the amount of time
  * units and to see whether it is within a specific range of time units. If so
@@ -271,12 +265,7 @@ function decoding(arrayInBin)
 	console.log(message2);
 	outputAreaRef.innerHTML = message2;
 }
-
-
-
-
-/************************************************************************************************************/
-
+            
 /*
  * This function morse2val was created to use the object "morseCodeSignals" to get the corresponding character from the
  * parameter set in this function "dotdashSignals" which contains the morse for that character. 
@@ -284,8 +273,6 @@ function decoding(arrayInBin)
  * Input : A correcpnding morse code which is found from the function above.
  * Output: It returns the character which is been looked up at the morseCodeSignals object.
  */
-            
-
 function morse2val(dotDashSignals)
 {
 	var message="";
@@ -298,9 +285,9 @@ function morse2val(dotDashSignals)
 				message=morseCodeSignals[character];
 				if (message=="SK")
 				{
-					messageFinished();	//This part of the code checks if this character is and end of transmission(SK) if so
-					message="";       	//it doesnt return any character to the message and runs the messageFinished() which
-				}                         	//returns the circle icon to green (ready state).
+					messageFinished();	// Task 6- This part of the code checks if this character is and end of transmission(SK) if so
+					message="";       	//         it doesnt return any character to the message and runs the messageFinished() which
+				}                         	//         returns the circle icon to green (ready state).
 
 			}
 		}
@@ -308,14 +295,8 @@ function morse2val(dotDashSignals)
 	return message;
 }
 
-/**************************************************************************************************************/
-
-
-/*
-This code is used to clear the content in the message field box using an anonymous function.
- Also this code clears the previous variables being used to get the given morse code. 
- */
- 
+//Task 5- This code is used to clear the content in the message field box using an anonymous function.
+//        Also this code clears the previous variables being used to get the given morse code. 
 document.getElementById('restartButton').addEventListener('click', function() 
 {
 	document.getElementById("messageField").innerHTML="";     // clears the message field
@@ -330,4 +311,3 @@ document.getElementById('restartButton').addEventListener('click', function()
 	messageFinishedFlag = false;
 	decodeCameraImage(data);
 });
-/**************************************************************************************************************/
