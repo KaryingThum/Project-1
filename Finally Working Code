@@ -23,8 +23,7 @@
  *
  */
 
-// ADD YOUR ADDITIONAL FUNCTIONS AND GLOBAL VARIABLES HERE
-
+//These are th global variables which are set in the cousrse of this code.
 var array2 = [];
 var numberOn=0;
 var numberOff=0;
@@ -34,7 +33,7 @@ var outputAreaRef = document.getElementById("messageField");
 outputAreaRef.innerHTML="";
 
 /*
- * This function is called once per unit of time with camera image data.
+ * This function decodeCameraImage is called once per unit of time with camera image data.
  * 
  * Input : Image Data. An array of integers representing a sequence of pixels.
  *		 Each pixel is representing by four consecutive integer values for 
@@ -58,10 +57,16 @@ function decodeCameraImage(data)
 	return result;
 }
             
-// function for task 1
-// This function is to analyse the image data captured and check for each pixel in the image.
-// If most of the pixel is red, the function will return true.
-// If most of the pixel is blue, the function will return false.
+/*
+ * This function analyseImageData_OnOffSignal is used to analyse the 
+ * image data captured and check for each pixel in the image.
+ * If most of the pixel is red, the function will return true.
+ * If most of the pixel is blue, the function will return false.
+ * 
+ * Input : The image data from the above function is sent into this to do the task sated by the above function
+ *         and the statements said just above.
+ * Output: It returns a boolean denoting whether the image is mostly blue or red.
+ */
 function analyseImageData_OnOffSignal(arrayOfPixel)
 {
 	var array = arrayOfPixel;
@@ -97,7 +102,16 @@ function analyseImageData_OnOffSignal(arrayOfPixel)
 	return result;
 }
 
-//function that change true false to binary code
+
+/****************************************************************************************************/
+
+/*
+ * This function boolToBin is used change true/false to binary code from the result of the above function
+ * 
+ * Input : It contains a boolean denoting whether the image is mostly blue or red.
+ * Output: It returns an array containing a binary code of the boolean sent into the function.
+ */
+
 function boolToBin(bool)
 {
 	if(bool === true)
@@ -110,8 +124,10 @@ function boolToBin(bool)
 	}
 	return array2;
 }
+
+/*********************************************************************************************************/
             
-// Task 2-This object "morseCodeSignals" containing the property of all the dot and dashes which were obtained from the above code and then 
+// This object "morseCodeSignals" containing the property of all the dot and dashes which were obtained from the above code and then 
 // recieves the correct character corresponding to it.
 var morseCodeSignals = 
 {
@@ -158,12 +174,20 @@ var morseCodeSignals =
 	// symbols
     	"-.--.": "(",
     	"-.--.-": ")",
-    	"-.--.-": ")",
-    	"-.--.-": ")",
-    	"-.--.-": ")",
-    	"-.--.-": ")",
-    	"-.--.-": ")",
-    	"-.--.-": ")",
+    	".-..-.": """,
+    	"-...-": "=",
+    	".----.": "'",
+    	"-..-.": "/",
+    	".-.-.": "+",
+    	"---...": ":",
+    	".-.-.-": ".",
+    	"--..--": ",",
+    	"..--..": "?",
+    	"-....-": "-",
+    	".--.-.": "@",
+    	"...-..-": "$",
+    	"..--.-": "_",
+    	"-.-.--": "!",
     
     
 	//INTER SPACE CHARACTERS
@@ -171,7 +195,19 @@ var morseCodeSignals =
 	"...-.-": "SK" //End of transmission
 };
 
-//function for task 3
+/***********************************************************************************************************/
+/*
+ * This function decoding is used to analyse the binary array sent in is used to counte the amount of time
+ * units and to see whether it is within a specific range of time units. If so
+ * it would convert to the corresponding character which may be '.','-',""," " 
+ * which is it's morse code. This morse code is been sent to the function morse2val to get the corresponding 
+ * for the given morse code.
+ *
+ * Input : An array containing a binary code of the image data.
+ * Output: It returns character which is been looked up at the morseCodeSignals object
+ * 	   from the corresponding morsecode which is been found in this function using the input of binary digits.
+ */
+
 function decoding(arrayInBin)
 {
 	for(i=0;i<arrayInBin.length;i++)
@@ -235,10 +271,21 @@ function decoding(arrayInBin)
 	console.log(message2);
 	outputAreaRef.innerHTML = message2;
 }
+
+
+
+
+/************************************************************************************************************/
+
+/*
+ * This function morse2val was created to use the object "morseCodeSignals" to get the corresponding character from the
+ * parameter set in this function "dotdashSignals" which contains the morse for that character. 
+ *
+ * Input : A correcpnding morse code which is found from the function above.
+ * Output: It returns the character which is been looked up at the morseCodeSignals object.
+ */
             
-//Task 4 
-//This function was created to use the object "morseCodeSignals" to get the corresponding character from the
-//parameter set in this function "dotdashSignals" which contains the morse for that character. 
+
 function morse2val(dotDashSignals)
 {
 	var message="";
@@ -251,9 +298,9 @@ function morse2val(dotDashSignals)
 				message=morseCodeSignals[character];
 				if (message=="SK")
 				{
-					messageFinished();	// Task 6- This part of the code checks if this character is and end of transmission(SK) if so
-					message="";       	//         it doesnt return any character to the message and runs the messageFinished() which
-				}                         	//         returns the circle icon to green (ready state).
+					messageFinished();	//This part of the code checks if this character is and end of transmission(SK) if so
+					message="";       	//it doesnt return any character to the message and runs the messageFinished() which
+				}                         	//returns the circle icon to green (ready state).
 
 			}
 		}
@@ -261,8 +308,14 @@ function morse2val(dotDashSignals)
 	return message;
 }
 
-//Task 5- This code is used to clear the content in the message field box using an anonymous function.
-//        Also this code clears the previous variables being used to get the given morse code. 
+/**************************************************************************************************************/
+
+
+/*
+This code is used to clear the content in the message field box using an anonymous function.
+ Also this code clears the previous variables being used to get the given morse code. 
+ */
+ 
 document.getElementById('restartButton').addEventListener('click', function() 
 {
 	document.getElementById("messageField").innerHTML="";     // clears the message field
@@ -277,3 +330,4 @@ document.getElementById('restartButton').addEventListener('click', function()
 	messageFinishedFlag = false;
 	decodeCameraImage(data);
 });
+/**************************************************************************************************************/
