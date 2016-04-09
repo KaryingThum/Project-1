@@ -23,8 +23,7 @@
  *
  */
 
-// These are the global variables in this code .
-
+// THIS ARE THE GLOBAL VARIABLES.
 var array2 = [];
 var numberOn=0;
 var numberOff=0;
@@ -34,7 +33,7 @@ var outputAreaRef = document.getElementById("messageField");
 outputAreaRef.innerHTML="";
 
 /*
- * This function decodeCameraImage is called once per unit of time with camera image data.
+ * This function is called once per unit of time with camera image data.
  * 
  * Input : Image Data. An array of integers representing a sequence of pixels.
  *		 Each pixel is representing by four consecutive integer values for 
@@ -109,7 +108,6 @@ function analyseImageData_OnOffSignal(arrayOfPixel)
  * Input : It contains a boolean denoting whether the image is mostly blue or red.
  * Output: It returns an array containing a binary code of the boolean sent into the function.
  */
-
 function boolToBin(bool)
 {
 	if(bool === true)
@@ -124,7 +122,7 @@ function boolToBin(bool)
 }
             
 // This object "morseCodeSignals" containing the property of all the dot and dashes which were obtained from the above code and then 
-// recieves the correct character corresponding to it.
+// receives the correct character corresponding to it.
 var morseCodeSignals = 
 {
 	// ALPHABETS
@@ -171,8 +169,8 @@ var morseCodeSignals =
     	"-.--.": "(",
     	"-.--.-": ")",
     	".-..-.": "\"",
-    	"-...-": "=",
-    	".----.": "'",
+    	"...-..-": "$",
+    	".----.": "\'",
     	"-..-.": "/",
     	".-.-.": "+",
     	"---...": ":",
@@ -181,7 +179,7 @@ var morseCodeSignals =
     	"..--..": "?",
     	"-....-": "-",
     	".--.-.": "@",
-    	"...-..-": "$",
+    	"-...-": "=",
     	"..--.-": "_",
     	"-.-.--": "!",
     
@@ -189,6 +187,7 @@ var morseCodeSignals =
 	".-.-": "\n", // New Line
 	"...-.-": "SK" //End of transmission
 };
+
 
 /*
  * This function decoding is used to analyse the binary array sent in is used to counte the amount of time
@@ -206,7 +205,16 @@ function decoding(arrayInBin)
 {
 	for(i=0;i<arrayInBin.length;i++)
 	{
-		if(arrayInBin[i]==0)
+		//Task 6- This part of the code checks if this morse code is an end of transmission(SK)
+		//it doesnt return any character to the message and runs the messageFinished() which
+		//returns the circle icon to green (ready state).
+		if(morseCode==="...-.-")
+		{
+			messageFinished();
+			message2+="";
+		}
+		
+		else if(arrayInBin[i]==0)
 		{
 			numberOff++;
 			if((numberOn==1)||(numberOn==2))
@@ -234,6 +242,14 @@ function decoding(arrayInBin)
 		else if(arrayInBin[i]==1)
 		{
 			numberOn++;
+			
+			if((morseCode==="")&&(message2==""))
+			{
+				console.log("off="+numberOff);
+				numberOff=0;
+				array2=[];
+			}
+			
 			if((numberOff==1)||(numberOff==2))
 			{
 				console.log("off="+numberOff);
@@ -265,7 +281,8 @@ function decoding(arrayInBin)
 	console.log(message2);
 	outputAreaRef.innerHTML = message2;
 }
-            
+ 
+           
 /*
  * This function morse2val was created to use the object "morseCodeSignals" to get the corresponding character from the
  * parameter set in this function "dotdashSignals" which contains the morse for that character. 
@@ -273,6 +290,7 @@ function decoding(arrayInBin)
  * Input : A correcpnding morse code which is found from the function above.
  * Output: It returns the character which is been looked up at the morseCodeSignals object.
  */
+
 function morse2val(dotDashSignals)
 {
 	var message="";
@@ -283,12 +301,6 @@ function morse2val(dotDashSignals)
 			if (dotDashSignals === character)
 			{
 				message=morseCodeSignals[character];
-				if (message=="SK")
-				{
-					messageFinished();	// Task 6- This part of the code checks if this character is and end of transmission(SK) if so
-					message="";       	//         it doesnt return any character to the message and runs the messageFinished() which
-				}                         	//         returns the circle icon to green (ready state).
-
 			}
 		}
 	}
@@ -297,6 +309,7 @@ function morse2val(dotDashSignals)
 
 //Task 5- This code is used to clear the content in the message field box using an anonymous function.
 //        Also this code clears the previous variables being used to get the given morse code. 
+
 document.getElementById('restartButton').addEventListener('click', function() 
 {
 	document.getElementById("messageField").innerHTML="";     // clears the message field
